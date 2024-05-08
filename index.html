@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Games for All!!</title>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        const gamesData = [
+            { title: "Hangman", rating: "5", accessibility: "Fun for all" },
+            { title: "Tic Tac Toe", rating: "4.5", accessibility: "Fun for all" },
+            { title: "Rock Paper Scissors", rating: "4", accessibility: "Fun for all" },
+            { title: "Bokurano Daiboukenn 3", rating: "5", accessibility: "Games for the visually impaired" },
+            { title: "The Last of Us Part II", rating: "4.5", accessibility: "Games for the visually impaired" },
+            { title: "SEQUENCE STORM", rating: "4", accessibility: "Games for the visually impaired" },
+            { title: "Quentin C playroom", rating: "3.5", accessibility: "Games for the visually impaired" },
+            { title: "Gears Tactics", rating: "3", accessibility: "Games for the visually impaired" },
+            { title: "Fortnite", rating: "4", accessibility: "Games for the auditory disability" },
+            { title: "The Last Of Us Part II", rating: "3.5", accessibility: "Games for the auditory disability" },
+            { title: "Watch Dogs: Legion", rating: "4.5", accessibility: "Games for the auditory disability" },
+            { title: "Moss", rating: "4", accessibility: "Games for the auditory disability" },
+            { title: "Ancestors: The Humankind Odyssey", rating: "3", accessibility: "Games for the auditory disability" },
+            { title: "Fall Guys", rating: "4.5", accessibility: "Games for people with mental disability" },
+            { title: "Among Us", rating: "3.5", accessibility: "Games for people with mental disability" },
+            { title: "Ring Fit Adventure", rating: "4", accessibility: "Games for people with mental disability" },
+            { title: "Dungeons & Dragons", rating: "4.5", accessibility: "Games for people with mental disability" },
+            { title: "Minecraft", rating: "4", accessibility: "Games for people with mental disability" }
+        ];
+
+        function showGame(game) {
+            const gameArea = document.getElementById('gameArea');
+            switch (game) {
+                case 'hangman':
+                    selectedWord = ["hello", "world", "javascript", "hangman"][Math.floor(Math.random() * 4)];
+                    remainingGuesses = 6;
+                    guessedLetters = [];
+                    gameArea.innerHTML = `
+                        <h2>Hangman Game</h2>
+                        <div id="wordSpotlight" class="game-info">${"_ ".repeat(selectedWord.length)}</div>
+                        <div id="alphabet" class="game-buttons"></div>
+                        <p id="guesses" class="game-info">Remaining Guesses: 6</p>
+                    `;
+                    initializeHangman();
+                    break;
+                case 'ticTacToe':
+                    currentPlayer = 'X';
+                    gameActive = true;
+                    gameState = Array(9).fill(null);
+                    gameArea.innerHTML = `
+                        <h2>Tic Tac Toe</h2>
+                        <div id="ticTacToeGrid" class="tictactoe-grid"></div>
+                        <p id="gameStatus" class="game-info">Player X's turn</p>
+                        <button onclick="initializeTicTacToe()" class="game-buttons">Restart Game</button>
+                    `;
+                    initializeTicTacToe();
+                    break;
+                case 'rockPaperScissors':
+                    gameArea.innerHTML = `
+                        <h2>Rock Paper Scissors</h2>
+                        <div id="rockPaperScissorsButtons" class="game-buttons">
+                            <button onclick="playGame('rock')">Rock</button>
+                            <button onclick="playGame('paper')">Paper</button>
+                            <button onclick="playGame('scissors')">Scissors</button>
+                        </div>
+                        <p id="gameResult" class="game-info"></p>
+                    `;
+                    break;
+                default:
+                    gameArea.innerHTML = '<p>Select a game from the navigation menu.</p>';
+            }
+        }
+
+        // Search Functionality
+        function searchGames() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const results = gamesData.filter(game => game.title.toLowerCase().includes(query));
+            const searchResults = document.getElementById('searchResults');
+            searchResults.innerHTML = results.map(game =>
+                `<li>${game.title} - Rating: ${game.rating}, Accessibility: ${game.accessibility}</li>`
+            ).join('');
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Games for All!!</h1>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showGame('hangman')">Hangman</a></li>
+                <li><a href="#" onclick="showGame('ticTacToe')">Tic Tac Toe</a></li>
+                <li><a href="#" onclick="showGame('rockPaperScissors')">Rock Paper Scissors</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div id="settings">
+            <label for="charSizeRange">Font Size:</label>
+            <input type="range" id="charSizeRange" min="10" max="40" step="1" value="16">
+            <label for="charSpaceRange">Letter Spacing:</label>
+            <input type="range" id="charSpaceRange" min="-0.5" max="0.5" step="0.1" value="0">
+            <label for="fontColorSelect">Font Color:</label>
+            <input type="color" id="fontColorSelect" value="#ffffff">
+            <label for="pageColorSelect">Page Color:</label>
+            <input type="color" id="pageColorSelect" value="#add8e6">
+        </div>
+        <div id="gameArea">
+            <p>Select a game from the navigation menu.</p>
+        </div>
+
+        <div id="searchSection">
+            <h2>Search Games</h2>
+            <input type="text" id="searchInput" placeholder="Search for a game..." oninput="searchGames()">
+            <button onclick="searchGames()">Search</button>
+            <ul id="searchResults"></ul>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2024 FunZone Games</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
